@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1695909806771,
+      "tag": "0000_skinny_iron_man",
+      "breakpoints": true
+    }
+  ]
+}
