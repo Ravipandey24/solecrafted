@@ -11,3 +11,9 @@ type NavConfigType = {
         }[]
     }[]
 }
+
+type CategoryTabItem = {
+    title: string,
+    href: string,
+    image: string
+}

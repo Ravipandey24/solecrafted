@@ -1,26 +1,36 @@
 import { linkify } from "@/lib/utils";
-import { productCategories } from "./product";
+import { productCategories, productGenderCategories } from "./product";
 import { z } from "zod";
 import { Sedgwick_Ave_Display } from "next/font/google";
 
-const titleFont = Sedgwick_Ave_Display({weight: '400', subsets:['latin'] ,display: 'swap', adjustFontFallback: false})
+const titleFont = Sedgwick_Ave_Display({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+  adjustFontFallback: false,
+});
 export const NavConfig: NavConfigType = {
   name: "SoleCrafted",
   description: "An e-commerce shoes website.",
   headingFont: titleFont,
   url: "/",
-  NavItems: productCategories.map((category) => ({
+  NavItems: productGenderCategories.map((category) => ({
     title: category.title,
     items: [
       {
         title: "All",
-        href: `/categories/${linkify(category.title)}`,
+        href: `/gender/${linkify(category.title)}`,
       },
       ...category.subcategories.map((subCategory) => ({
         title: subCategory,
-        href: `/categories/${linkify(category.title)}/${linkify(subCategory)}`,
+        href: `/gender/${linkify(category.title)}/${linkify(subCategory)}`,
       })),
-    ]
-  })) as NavConfigType['NavItems']
-}
+    ],
+  })) as NavConfigType["NavItems"],
+};
 
+export const categoryTab = productCategories.map((category) => ({
+  title: category,
+  href: `/category/${linkify(category)}`,
+  image: `/images/categories/${linkify(category)}.jpg`
+})) as CategoryTabItem[];

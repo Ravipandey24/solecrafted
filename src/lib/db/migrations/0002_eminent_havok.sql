@@ -1,0 +1,1 @@
+ALTER TABLE `products` MODIFY COLUMN `storeId` int NOT NULL DEFAULT -1;

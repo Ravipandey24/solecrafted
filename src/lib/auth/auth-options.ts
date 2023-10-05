@@ -35,6 +35,7 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
+  secret: env.NEXTAUTH_SECRET,
   callbacks: {
     session({ session, token }) {
       session.user.id = token.id;

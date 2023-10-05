@@ -20,19 +20,21 @@ export const products = mysqlTable("products", {
   name: varchar("name", { length: 191 }).notNull(),
   description: text("description"),
   imageUrl: varchar('image_url', { length: 256 }).notNull(),
-  category: mysqlEnum("category", [
+  gender: mysqlEnum("gender", [
     "men",
     "women",
     "kids"
   ])
     .notNull()
     .default("men"),
-  subcategory: varchar("subcategory", { length: 191 }),
+  category: varchar("category", { length: 191 }),
+  brand: varchar("brand", { length: 191 }),
   price: decimal("price", { precision: 10, scale: 2 }).notNull().default("0"),
   inventory: int("inventory").notNull().default(0),
   rating: int("rating").notNull().default(0),
+  slug: varchar("slug", { length: 191 }),
   tags: json("tags").$type<string[] | null>().default(null),
-  storeId: int("storeId").notNull(),
+  storeId: int("storeId").notNull().default(-1),
   createdAt: timestamp("createdAt").defaultNow(),
 });
 
@@ -47,14 +49,15 @@ export const profiles = mysqlTable("profile", {
   createdAt: timestamp('created_at').defaultNow()
 });
 
+// product controllers
 export const insertProductSchema = createInsertSchema(products);
 export const selectProductSchema = createSelectSchema(products);
-export const ProductIdSchema = selectProductSchema.pick({ id: true });
+export const productIdSchema = selectProductSchema.pick({ id: true });
 export const updateProductSchema = selectProductSchema;
 
 export type Product = z.infer<typeof selectProductSchema>;
 export type NewProduct = z.infer<typeof insertProductSchema>;
-export type ProductId = z.infer<typeof ProductIdSchema>["id"];
+export type ProductId = z.infer<typeof productIdSchema>["id"];
 
 // profile controllers
 export const insertProfileSchema = createInsertSchema(profiles);

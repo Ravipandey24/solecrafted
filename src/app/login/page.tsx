@@ -19,8 +19,8 @@ const page = async () => {
 
   if (session) {
     return (
-      <Card className="fixed w-[calc(100vw-3.5rem)] md:w-[400px]">
-        <CardContent className="py-5">
+      <Card className="fixed w-[calc(100vw-3.5rem)] md:w-[400px] h-[200px]">
+        <CardContent className="py-5 h-full">
           <SignOutForm></SignOutForm>
         </CardContent>
       </Card>

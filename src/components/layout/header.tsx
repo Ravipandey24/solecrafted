@@ -2,6 +2,8 @@ import { ThemeToggle } from "./theme-toggle";
 import { NavConfig } from "@/config/site";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import UserCard from "./user-card";
+import SideCart from "./side-cart";
 
 // disabling ssr for nav component to handle the icon fill rendering issue.
 const WebNav = dynamic(() => import("./web-nav"), { ssr: false });
@@ -22,6 +24,8 @@ const Header = ({}) => {
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-2">
             <ThemeToggle></ThemeToggle>
+            <SideCart></SideCart>
+            <UserCard></UserCard>
           </nav>
         </div>
       </div>

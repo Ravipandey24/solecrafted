@@ -3,7 +3,8 @@ const ManFootwearCategories = ['Sneakers', 'Running', 'Walking', 'Training & Gym
 const WomanFootwearCategories = ['Sneakers', 'Running', 'Walking', 'Training & Gym', 'Sandals & Flip Flops', 'Badminton']
 const KidsFootwearCategories = ['Older Kids', 'Younger Kids', 'Babies and Toddlers', 'Lifestyle', 'Sandals & Slides', 'Running']
 
-export const productCategories = [
+export const productCategories = ['Casual', 'Running', 'Formal', 'Football']
+export const productGenderCategories = [
     {
         title: 'Men',
         subcategories: ManFootwearCategories.map(item => item)

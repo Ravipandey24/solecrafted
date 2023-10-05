@@ -8,3 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 export function linkify(text: string) {
   return text.split(' ').filter(word => !['and', '&'].includes(word)).join('-').toLowerCase()
 }
+
+export function capitalize(text: string){
+  return text.charAt(0).toUpperCase() + text.slice(1)
+}
