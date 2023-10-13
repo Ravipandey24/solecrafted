@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "d5a0be90-06c1-4c59-9146-2e4eafbe5ba1",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "4223846f-889e-48ce-98a3-b29002665ed7",
+  "prevId": "88b3b293-d96b-4470-a624-26cd4965beee",
   "tables": {
     "account": {
       "name": "account",
@@ -239,22 +239,31 @@
           "name": "product_id",
           "type": "int",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "cart_id": {
           "name": "cart_id",
           "type": "int",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "size": {
           "name": "size",
           "type": "json",
           "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "('null')"
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "int",
+          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": false,
+          "default": 1
         },
         "closed": {
           "name": "closed",
@@ -299,7 +308,7 @@
           "name": "profile_id",
           "type": "int",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "closed": {

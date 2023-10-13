@@ -1,5 +1,5 @@
 import ProductCard from "@/components/cards/ProductCard";
-import FilterDropdown from "@/components/layout/filter-dropdown";
+import FilterDropdown from "@/components/features/filter-dropdown";
 import { getProductByCategory } from "@/lib/api/products/queries";
 import { capitalize } from "@/lib/utils";
 import { notFound } from "next/navigation";
@@ -19,7 +19,7 @@ const page = async ({ params }: CategoryPageProps) => {
         <FilterDropdown></FilterDropdown>
       </div>
       <div className="grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 pb-6">
-        {products.map(product => <ProductCard product={product}></ProductCard>)}
+        {products.map(product => <ProductCard key={product.id} product={product}></ProductCard>)}
       </div>
     </>
   );

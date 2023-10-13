@@ -16,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   SignUpFormType,
   signUpFormSchema,
-} from "@/lib/validations/client-vals";
+} from "@/lib/validations/auth-vals";
 import { useToast } from "../ui/use-toast";
 import { z } from "zod";
 import axios, { AxiosError } from "axios";
@@ -132,7 +132,6 @@ const SignUpForm = ({}) => {
         />
         <Button className="w-full" disabled={isSendingRequest} type="submit">
           <span>Submit</span>
-          {isSendingRequest && <Icons.spinner className="ml-2"></Icons.spinner>}
         </Button>
       </form>
     </Form>

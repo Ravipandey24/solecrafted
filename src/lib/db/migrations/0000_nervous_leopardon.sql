@@ -36,23 +36,43 @@ CREATE TABLE `verificationToken` (
 	CONSTRAINT `verificationToken_identifier_token` PRIMARY KEY(`identifier`,`token`)
 );
 --> statement-breakpoint
+CREATE TABLE `shopping_cart_items` (
+	`id` serial AUTO_INCREMENT NOT NULL,
+	`product_id` int,
+	`cart_id` int,
+	`size` json NOT NULL,
+	`closed` boolean NOT NULL DEFAULT false,
+	`createdAt` timestamp DEFAULT (now()),
+	CONSTRAINT `shopping_cart_items_id` PRIMARY KEY(`id`)
+);
+--> statement-breakpoint
+CREATE TABLE `shopping_carts` (
+	`id` serial AUTO_INCREMENT NOT NULL,
+	`profile_id` int,
+	`closed` boolean NOT NULL DEFAULT false,
+	`createdAt` timestamp DEFAULT (now()),
+	CONSTRAINT `shopping_carts_id` PRIMARY KEY(`id`)
+);
+--> statement-breakpoint
 CREATE TABLE `products` (
 	`id` serial AUTO_INCREMENT NOT NULL,
 	`name` varchar(191) NOT NULL,
 	`description` text,
 	`image_url` varchar(256) NOT NULL,
-	`category` enum('men','women','kids') NOT NULL DEFAULT 'men',
-	`subcategory` varchar(191),
+	`gender` enum('men','women','kids') NOT NULL DEFAULT 'men',
+	`category` varchar(191),
+	`brand` varchar(191),
 	`price` decimal(10,2) NOT NULL DEFAULT '0',
-	`inventory` int NOT NULL DEFAULT 0,
+	`inventory` json DEFAULT ('null'),
 	`rating` int NOT NULL DEFAULT 0,
+	`slug` varchar(191),
 	`tags` json DEFAULT ('null'),
-	`storeId` int NOT NULL,
+	`storeId` int NOT NULL DEFAULT -1,
 	`createdAt` timestamp DEFAULT (now()),
 	CONSTRAINT `products_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
-CREATE TABLE `profile` (
+CREATE TABLE `profiles` (
 	`id` serial AUTO_INCREMENT NOT NULL,
 	`name` varchar(255),
 	`email` varchar(255) NOT NULL,
@@ -61,6 +81,6 @@ CREATE TABLE `profile` (
 	`image` varchar(255) DEFAULT '',
 	`phone_number` varchar(255),
 	`created_at` timestamp DEFAULT (now()),
-	CONSTRAINT `profile_id` PRIMARY KEY(`id`),
-	CONSTRAINT `profile_email_unique` UNIQUE(`email`)
+	CONSTRAINT `profiles_id` PRIMARY KEY(`id`),
+	CONSTRAINT `profiles_email_unique` UNIQUE(`email`)
 );

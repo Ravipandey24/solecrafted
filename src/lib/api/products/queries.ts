@@ -50,15 +50,27 @@ export const getProductCountByCategory = async (
   return { productCount: c.count };
 };
 
-export const getProductByCategory = async (
-    category: Product["category"]
-  ) => {
-    const { category: productCategory } = selectProductSchema
-      .pick({ category: true })
-      .parse({ category });
-    const c = await db
-      .select()
-      .from(products)
-      .where(eq(products.category, productCategory!));
-    return { products: c };
-  };
+export const getProductByCategory = async (category: Product["category"]) => {
+  const { category: productCategory } = selectProductSchema
+    .pick({ category: true })
+    .parse({ category });
+  const c = await db
+    .select()
+    .from(products)
+    .where(eq(products.category, productCategory!));
+  return { products: c };
+};
+
+export const getProductInventory = async (id: ProductId) => {
+  const { id: productId } = productIdSchema.parse({ id });
+  const [c] = await db
+    .select({ inventory: products.inventory })
+    .from(products)
+    .where(eq(products.id, productId));
+  return { inventory: c.inventory! };
+};
+
+export const getSimilarProducts = async (productId: number) => {
+  const c = await db.select().from(products).limit(4);
+  return { products: c };
+};

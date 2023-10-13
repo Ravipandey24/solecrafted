@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "4aee6a79-34ee-499f-899a-75ce5bdc0e34",
-  "prevId": "56bf5512-2295-447e-810b-dddd39d88202",
+  "id": "a41f6ba8-e5de-4377-b075-6a7c663c6c0b",
+  "prevId": "d5a0be90-06c1-4c59-9146-2e4eafbe5ba1",
   "tables": {
     "account": {
       "name": "account",
@@ -225,6 +225,120 @@
       },
       "uniqueConstraints": {}
     },
+    "shopping_cart_items": {
+      "name": "shopping_cart_items",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "product_id": {
+          "name": "product_id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "cart_id": {
+          "name": "cart_id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "size": {
+          "name": "size",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 1
+        },
+        "closed": {
+          "name": "closed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "shopping_cart_items_id": {
+          "name": "shopping_cart_items_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "shopping_carts": {
+      "name": "shopping_carts",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "profile_id": {
+          "name": "profile_id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "closed": {
+          "name": "closed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "shopping_carts_id": {
+          "name": "shopping_carts_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
     "products": {
       "name": "products",
       "columns": {
@@ -288,11 +402,11 @@
         },
         "inventory": {
           "name": "inventory",
-          "type": "int",
+          "type": "json",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false,
-          "default": 0
+          "default": "('null')"
         },
         "rating": {
           "name": "rating",
@@ -322,7 +436,8 @@
           "type": "int",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": false,
+          "default": -1
         },
         "createdAt": {
           "name": "createdAt",
@@ -345,8 +460,8 @@
       },
       "uniqueConstraints": {}
     },
-    "profile": {
-      "name": "profile",
+    "profiles": {
+      "name": "profiles",
       "columns": {
         "id": {
           "name": "id",
@@ -411,16 +526,16 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {
-        "profile_id": {
-          "name": "profile_id",
+        "profiles_id": {
+          "name": "profiles_id",
           "columns": [
             "id"
           ]
         }
       },
       "uniqueConstraints": {
-        "profile_email_unique": {
-          "name": "profile_email_unique",
+        "profiles_email_unique": {
+          "name": "profiles_email_unique",
           "columns": [
             "email"
           ]

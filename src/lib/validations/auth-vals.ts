@@ -8,7 +8,7 @@ export const signUpFormSchema = z.object({
     message: "Please enter a valid email address",
   }),
   password: z
-    .string()
+    .string() 
     .min(5, {
       message: "Password must be at least 5 characters long",
     })

@@ -16,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   SignInFormType,
   signInFormSchema,
-} from "@/lib/validations/client-vals";
+} from "@/lib/validations/auth-vals";
 import { useState } from "react";
 import { useToast } from "../ui/use-toast";
 import { Icons } from "../icons";

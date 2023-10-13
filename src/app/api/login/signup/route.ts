@@ -1,6 +1,6 @@
 import { createProfile } from "@/lib/api/profiles/mutations";
 import { hash } from "@/lib/hash";
-import { signUpFormSchema } from "@/lib/validations/client-vals";
+import { signUpFormSchema } from "@/lib/validations/auth-vals";
 import { NextRequest, NextResponse } from "next/server";
 import z from "zod";
 

@@ -9,8 +9,6 @@ import {
   boolean
 } from "drizzle-orm/mysql-core";
 import type { AdapterAccount } from "@auth/core/adapters";
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import { z } from "zod";
 
 
 export const users = mysqlTable("user", {
@@ -65,5 +63,3 @@ export const verificationTokens = mysqlTable(
     compoundKey: primaryKey(vt.identifier, vt.token),
   })
 );
-
-;

@@ -4,8 +4,8 @@ import NextAuth from 'next-auth';
 
 declare module "next-auth" {
     interface Session {
-      user: Profile
-    }
+      user: Pick<Profile, "id" | "name" | "email">
+    } 
   }
 
   declare module "next-auth/jwt" {

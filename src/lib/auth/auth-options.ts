@@ -4,7 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "@/lib/db";
 import { env } from "../env.mjs";
 import axios, { AxiosError } from "axios";
-import { signInFormSchema } from "../validations/client-vals";
+import { signInFormSchema } from "../validations/auth-vals";
 import { getProfileByEmail } from "../api/profiles/queries";
 import { validatePassword } from "../hash";
 import { exists } from "drizzle-orm";
