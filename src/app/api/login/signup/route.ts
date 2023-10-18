@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import z from "zod";
 
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<any> {
   try {
     const body = await req.json();
     const { name, email, password } = signUpFormSchema.parse(body);

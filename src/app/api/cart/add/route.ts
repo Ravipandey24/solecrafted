@@ -1,14 +1,14 @@
 import { getOrCreateCart, insertOrUpdateCartItem } from "@/lib/action/cart";
 import { getUserAuth } from "@/lib/auth/utils";
 import { addTOCartSchema } from "@/lib/validations/cart-vals";
-import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest) {
+
+export async function POST(req: NextRequest): Promise<any> {
   try {
     const body = await req.json();
     const { productId, size } = addTOCartSchema.parse(body)
-    
+
     const { session } = await getUserAuth();
     if (!session) {
       return NextResponse.json(
