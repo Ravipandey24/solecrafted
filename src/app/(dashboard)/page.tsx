@@ -11,7 +11,7 @@ const page = async ({}) => {
       <section>
         <div className="grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 mt-2">
           {categoryTab.map((category) => (
-            <CategoryCard category={category}></CategoryCard>
+            <CategoryCard key={category.title} category={category}></CategoryCard>
           ))}
         </div>
       </section>
@@ -20,7 +20,7 @@ const page = async ({}) => {
         <Separator></Separator>
         <div className="grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 mt-2">
           {products.map((product) => (
-            <ProductCard product={product}></ProductCard>
+            <ProductCard key={product.id} product={product}></ProductCard>
           ))}
         </div>
       </section>

@@ -1,13 +1,13 @@
 "use server";
 
-import { Session } from "@auth/core/types";
 import { Cart, CartId, CartItem, NewCart, ProductId, ProfileId } from "../db/schema/schema";
-import { redirect } from "next/navigation";
 import { ShoeSizeType } from "@/types/db";
 import { getUserAuth } from "../auth/utils";
 import { getCartByProfileId, getCartItemsByCartId } from "../api/cart/queries";
-import { createCart, createCartItem } from "../api/cart/mutations";
+import { createCart, createCartItem, updateCartItem } from "../api/cart/mutations";
 import { isEqual } from "lodash";
+import { redirect } from 'next/navigation'
+
 
 
 export const addToCartAction = async (
@@ -15,22 +15,24 @@ export const addToCartAction = async (
   size: ShoeSizeType
 ) => {
   try {
-    const { session } = await getUserAuth();
-    if (!session) {
-      redirect("/login");
-    }
+    await new Promise(resolve => setTimeout(()=> {console.log('nigga'); resolve('');}, 500))
+    console.log('--------')
+    // const { session } = await getUserAuth();
+    // if (!session) {
+    //   return redirect('/login');
+    // }
 
-    const profileId = session?.user.id;
-    const { cart } = await getOrCreateCart(profileId);
-    await insertOrUpdateCartItem(productId, cart.id, size);
+    // const profileId = session?.user.id;
+    // const { cart } = await getOrCreateCart(profileId!);
+    // await insertOrUpdateCartItem(productId, cart.id, size);
     return { success: true };
   } catch (error) {
-    console.log(error)
+    console.log(error)  
     return { success: false };
   }
 };
 
-const getOrCreateCart = async (profileId: ProfileId) => {
+export const getOrCreateCart = async (profileId: ProfileId) => {
     const { cart } = await getCartByProfileId(profileId);
     if(cart){ 
         return { cart }
@@ -42,13 +44,13 @@ const getOrCreateCart = async (profileId: ProfileId) => {
     }
 }
 
-const insertOrUpdateCartItem = async ( productId: ProductId, cartId: CartId, size: ShoeSizeType ) => {
+export const insertOrUpdateCartItem = async ( productId: ProductId, cartId: CartId, size: ShoeSizeType ) => {
     const { cartItems } = await getCartItemsByCartId(cartId)
     const [item] = cartItems.filter((item) => item.productId === productId && isEqual(item.size, size));
     if(item) {
-        console.log('already there', item)
+        // updating cart item quantity by 1
+        await updateCartItem(item.id, {...item, quantity: item.quantity + 1})
     } else {
-        console.log('creating new one')
         await createCartItem({ productId, cartId, size })
     }
 }

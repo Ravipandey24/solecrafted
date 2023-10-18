@@ -1,6 +1,4 @@
 import { AllSizeVariants } from "@/config/product";
-import { Button } from "../ui/button";
-import Link from "next/link";
 import { FC } from "react";
 import { cn } from "@/lib/utils";
 import { getProductInventory } from "@/lib/api/products/queries";
@@ -26,7 +24,6 @@ const ShoeSizeTabs: FC<ShoeSizeTabProps> = async ({
   const isSelectedTab = (variant: ShoeSizeType) =>
     variant.size === selectedSize.size &&
     variant.metric === selectedSize.metric;
-
   return (
     <div>
       <div className="grid gap-1 grid-cols-3">

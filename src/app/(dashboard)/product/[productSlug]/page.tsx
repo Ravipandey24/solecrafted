@@ -13,6 +13,7 @@ import { getCartByProfileId } from "@/lib/api/cart/queries";
 import { getProductBySlug, getSimilarProducts } from "@/lib/api/products/queries";
 import { getUserAuth } from "@/lib/auth/utils";
 import { ShoeSizeType } from "@/types/db";
+import { revalidatePath } from "next/cache";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -29,6 +30,7 @@ const page = async ({ params, searchParams }: ProductPageProps) => {
     metric: searchParams.metric,
     size: Number(searchParams.size)
   } as ShoeSizeType;
+
 
   return (
     <div className="py-6 mx-auto space-y-6">
