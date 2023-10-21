@@ -2,11 +2,10 @@
 
 import { FC, useEffect, useTransition } from "react";
 import { Button } from "../ui/button";
-import { addToCartAction } from "@/lib/action/cart";
 import { useToast } from "../ui/use-toast";
 import { ShoeSizeType } from "@/types/db";
 import { redirect, useRouter } from "next/navigation";
-import { addTOCartSchema } from "@/lib/validations/cart-vals";
+import { addToCartSchema } from "@/lib/validations/cart-vals";
 import axios, { AxiosError } from "axios";
 
 interface AddToCartButtonProps {
@@ -29,19 +28,24 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({
   const addToCart = () => {
     startTransition(async () => {
       try {
-        const payload = addTOCartSchema.parse({ productId, size: selectedSize })
-        const res = await axios.post('/api/cart/add', payload)
-        if (res.data?.success)
+        const payload = addToCartSchema.parse({
+          productId,
+          size: selectedSize,
+        });
+        const res = await axios.post("/api/cart/add", payload);
+        if (res.data?.success) {
           toast({
             title: "Added to Cart!",
           });
+          // router.refresh();
+        }
       } catch (error) {
         if (error instanceof AxiosError) {
-          if(error.response?.status === 401){
+          if (error.response?.status === 401) {
             toast({
               title: "please, sign in to perform this action!",
             });
-            return redirect('/login')
+            return redirect("/login");
           }
           toast({
             title: error.response?.data.error,
@@ -59,7 +63,7 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({
   return (
     <Button
       disabled={isPending || !selectedSize.size}
-      className="rounded-full w-full"
+      className="rounded-full w-[19rem]"
       onClick={addToCart}
     >
       <span>Add to Cart</span>

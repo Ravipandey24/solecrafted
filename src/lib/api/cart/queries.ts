@@ -36,3 +36,14 @@ export const getCartItemsByCartId = async (id: CartId) => {
     });
     return { cartItems: c.cartItems }
 }
+
+export const getProductByCartItemId = async (id: CartItemId) => {
+    const { id: cartItemId } = cartItemIdSchema.parse({ id });
+    const [c] = await db.query.cartItems.findMany({
+        where: (cartItems, { eq }) => (eq(cartItems.id, cartItemId)),
+        with: {
+            product: true 
+        },
+    });
+    return { product: c.product }
+}

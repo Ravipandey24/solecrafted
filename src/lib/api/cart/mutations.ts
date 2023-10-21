@@ -40,9 +40,9 @@ export const createCartItem = async (cartItem: NewCartItem) => {
 };
 
 export const updateCartItem = async (id: CartItemId, cartItem: NewCartItem) => {
-  const { id: cartItemId } = cartItemIdSchema.parse({ id });
-  const newCartItem = insertCartItemSchema.parse(cartItem);
   try {
+    const { id: cartItemId } = cartItemIdSchema.parse({ id });
+    const newCartItem = insertCartItemSchema.parse(cartItem);
     await db
       .update(cartItems)
       // @ts-ignore
@@ -51,5 +51,33 @@ export const updateCartItem = async (id: CartItemId, cartItem: NewCartItem) => {
   } catch (err: any) {
     console.error("update cart", err);
     throw new Error(err);
+  }
+};
+
+export const updateCartItemQuantity = async (
+  id: CartItemId,
+  quantity: number
+) => {
+  try {
+    const { id: cartItemId } = cartItemIdSchema.parse({ id });
+    await db
+      .update(cartItems)
+      .set({ quantity })
+      .where(eq(cartItems.id, cartItemId));
+  } catch (err) {
+    const message = (err as Error).message ?? "Error, please try again";
+    console.error(message);
+    throw new Error(message);
+  }
+};
+
+export const deleteCartItem = async (id: CartItemId) => {
+  try {
+    const { id: cartItemId } = cartItemIdSchema.parse({ id });
+    await db.delete(cartItems).where(eq(cartItems.id, cartItemId!));
+  } catch (err) {
+    const message = (err as Error).message ?? "Error, please try again";
+    console.error(message);
+    throw new Error(message);
   }
 };

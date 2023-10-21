@@ -2,11 +2,11 @@ import z from "zod";
 import { ProductId } from "../db/schema/schema";
 import { ShoeSizeType } from "@/types/db";
 
-export const updateCartItemSchema = z.object({
+export const updateCartItemQuantitySchema = z.object({
     quantity: z.number().min(0).default(1),
 })
 
-export const addTOCartSchema = z.object({
+export const addToCartSchema = z.object({
     productId: z.custom<ProductId>(),
     size: z.custom<ShoeSizeType>()
 })
@@ -18,4 +18,4 @@ export const addTOCartSchema = z.object({
 // export const localCartSchema = z.array(cartItemSchema)
 
 // export type CartItemType = z.infer<typeof cartItemSchema>
-export type UpdateCartItemType = z.infer<typeof updateCartItemSchema>
+export type updateCartItemQuantityType = z.infer<typeof updateCartItemQuantitySchema>

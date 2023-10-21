@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { DetailedHTMLProps, FC, HTMLAttributes } from "react";
 import {
   Card,
   CardContent,
@@ -9,12 +9,20 @@ import { Button } from "../ui/button";
 import { Icons } from "../icons";
 import Link from "next/link";
 
-interface ErrorCardProps {
+type ErrorCardProps = {
   heading: string;
   description: string;
-}
+  href?: string;
+  variant?: "default" | "custom";
+} & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 
-const ErrorCard: FC<ErrorCardProps> = ({ heading, description }) => {
+const ErrorCard: FC<ErrorCardProps> = ({
+  heading,
+  description,
+  href,
+  variant,
+  children,
+}) => {
   return (
     <div className="w-full flex justify-center">
       <Card className="border-none">
@@ -22,12 +30,16 @@ const ErrorCard: FC<ErrorCardProps> = ({ heading, description }) => {
           <CardTitle className="text-2xl text-center">{heading}</CardTitle>
           <CardDescription>{description}</CardDescription>
           <div className="flex justify-center">
-            <Link href='/'>
-              <Button className="p-2" variant="ghost">
-                <Icons.chevronLeft className="w-4 h-5 transition-all fade-in-5 hover:-translate-x-1"></Icons.chevronLeft>
-                Go Home
-              </Button>
-            </Link>
+            {variant === "custom" ? (
+              children
+            ) : (
+              <Link href={href || "/"}>
+                <Button className="p-2" variant="ghost">
+                  <Icons.chevronLeft className="w-4 h-5 transition-all fade-in-5 hover:-translate-x-1"></Icons.chevronLeft>
+                  Go Home
+                </Button>
+              </Link>
+            )}
           </div>
         </CardContent>
       </Card>

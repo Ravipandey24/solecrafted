@@ -16,26 +16,32 @@ import { MinusIcon, PlusIcon } from "@radix-ui/react-icons"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  UpdateCartItemType,
-  updateCartItemSchema,
+  updateCartItemQuantityType,
+  updateCartItemQuantitySchema,
 } from "@/lib/validations/cart-vals";
+import { editCartItemQuantity } from "@/lib/action/cart";
+import { CartItemId } from "@/lib/db/schema/schema";
 
-interface AddToCartFormProps {
-  productId: number;
+interface EditItemQuantityFormProps {
+  cartItemId: CartItemId;
+  selectedQuantity: number;
 }
 
-const AddToCartForm: FC<AddToCartFormProps> = ({ productId }) => {
+const EditItemQuantityForm: FC<EditItemQuantityFormProps> = ({ cartItemId, selectedQuantity }) => {
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<UpdateCartItemType>({
-    resolver: zodResolver(updateCartItemSchema),
+  const form = useForm<updateCartItemQuantityType>({
+    resolver: zodResolver(updateCartItemQuantitySchema),
     defaultValues: {
-      quantity: 1,
+      quantity: selectedQuantity,
     },
   });
 
-  const onSubmit = (formData: UpdateCartItemType) => {
-    
+  const onSubmit = (formData: updateCartItemQuantityType) => {
+    startTransition(async () => {
+      const { quantity } = updateCartItemQuantitySchema.parse(formData);
+      await editCartItemQuantity(cartItemId, quantity);
+    })
   };
   return (
     <Form {...form}>
@@ -45,11 +51,11 @@ const AddToCartForm: FC<AddToCartFormProps> = ({ productId }) => {
       >
         <div className="flex items-center">
           <Button
-            id={`${productId}-decrement`}
-            type="button"
+            id={`${cartItemId}-decrement`}
+            type="submit"
             variant="outline"
             size="icon"
-            className="h-10 w-8 rounded-r-none"
+            className="h-8 w-8 rounded-r-none"
             onClick={() =>
               form.setValue(
                 "quantity",
@@ -72,7 +78,7 @@ const AddToCartForm: FC<AddToCartFormProps> = ({ productId }) => {
                     type="number"
                     inputMode="numeric"
                     min={0}
-                    className="h-10 w-14 rounded-none border-x-0"
+                    className="h-8 w-14 rounded-none border-x-0 focus:outline-none focus-visible:ring-0"
                     {...field}
                     onChange={(e) => {
                       const value = e.target.value;
@@ -87,11 +93,11 @@ const AddToCartForm: FC<AddToCartFormProps> = ({ productId }) => {
             )}
           />
           <Button
-            id={`${productId}-increment`}
-            type="button"
+            id={`${cartItemId}-increment`}
+            type="submit"
             variant="outline"
             size="icon"
-            className="h-10 w-8 rounded-l-none"
+            className="h-8 w-8 rounded-l-none"
             onClick={() =>
               form.setValue("quantity", form.getValues("quantity") + 1)
             }
@@ -101,19 +107,9 @@ const AddToCartForm: FC<AddToCartFormProps> = ({ productId }) => {
             <span className="sr-only">Add one item</span>
           </Button>
         </div>
-        <Button type="submit" className="h-8" disabled={isPending}>
-          {isPending && (
-            <Icons.spinner
-              className="mr-2 h-4 w-4 animate-spin"
-              aria-hidden="true"
-            />
-          )}
-          Add to cart
-          <span className="sr-only">Add to cart</span>
-        </Button>
       </form>
     </Form>
   );
 };
 
-export default AddToCartForm;
+export default EditItemQuantityForm;

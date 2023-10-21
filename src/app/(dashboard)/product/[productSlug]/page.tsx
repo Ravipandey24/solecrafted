@@ -9,11 +9,8 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { getCartByProfileId } from "@/lib/api/cart/queries";
 import { getProductBySlug, getSimilarProducts } from "@/lib/api/products/queries";
-import { getUserAuth } from "@/lib/auth/utils";
 import { ShoeSizeType } from "@/types/db";
-import { revalidatePath } from "next/cache";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -51,7 +48,7 @@ const page = async ({ params, searchParams }: ProductPageProps) => {
               <h3 className="text-lg uppercase">{product.name}</h3>
               <span className="text-muted-foreground">$ {product.price}</span>
             </CardHeader>
-            <CardContent>
+            <CardContent className="w-fit">
               <ShoeSizeTabs productId={product.id} selectedSize={selectedSize}></ShoeSizeTabs>
             </CardContent>
             <CardFooter>
