@@ -75,7 +75,6 @@ export const insertOrUpdateCartItem = async (
   } else {
     await createCartItem({ productId, cartId, size });
   }
-  revalidatePath('/')
 };
 
 export const editCartItemQuantity = async (itemId: CartItemId, quantity: number) => {

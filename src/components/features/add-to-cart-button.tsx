@@ -37,7 +37,7 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({
           toast({
             title: "Added to Cart!",
           });
-          // router.refresh();
+          router.refresh();
         }
       } catch (error) {
         if (error instanceof AxiosError) {
