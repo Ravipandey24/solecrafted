@@ -12,6 +12,7 @@ export type InventoryType = {
     available: number
 }
 
+// cart item type for card layout
 export type CartItemType = {
     id: CartItemId,
     size: ShoeSizeType,

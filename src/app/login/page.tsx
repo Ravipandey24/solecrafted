@@ -15,7 +15,6 @@ import { getUserAuth } from "@/lib/auth/utils";
 
 const page = async () => {
   const { session } = await getUserAuth();
-  console.log(session);
 
   if (session) {
     return (

@@ -76,7 +76,12 @@ const MobileNav: FC<MobileNavProps> = ({ navConfig }) => {
         </ScrollArea>
         <SheetFooter>
           <div className="flex justify-center">
-            <span className="text-xs text-gray-400">Made by Gojo</span>
+          <span className="flex gap-2 text-xs text-muted-foreground">
+            Made by Ravi{" "}
+            <Link href="https://github.com/Ravipandey24" rel="noopener noreferrer" target="_blank">
+              <Icons.gitHub className="w-3 h-3 text-foreground"></Icons.gitHub>
+            </Link>
+          </span>
           </div>
           {/* <SheetClose asChild>
             <Button type="submit">Save changes</Button>

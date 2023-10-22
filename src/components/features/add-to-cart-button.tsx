@@ -4,9 +4,8 @@ import { FC, useEffect, useTransition } from "react";
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
 import { ShoeSizeType } from "@/types/db";
-import { redirect, useRouter } from "next/navigation";
-import { addToCartSchema } from "@/lib/validations/cart-vals";
-import axios, { AxiosError } from "axios";
+import { redirect } from "next/navigation";
+import { addToCartAction } from "@/lib/action/cart";
 
 interface AddToCartButtonProps {
   productId: number;
@@ -19,43 +18,25 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({
 }) => {
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
-
-  useEffect(() => {
-    console.log("maybe");
-  }, [selectedSize.metric, selectedSize.size]);
 
   const addToCart = () => {
     startTransition(async () => {
-      try {
-        const payload = addToCartSchema.parse({
-          productId,
-          size: selectedSize,
-        });
-        const res = await axios.post("/api/cart/add", payload);
-        if (res.data?.success) {
+        const res = await addToCartAction(productId, selectedSize)
+        if(res.success){
           toast({
             title: "Added to Cart!",
           });
-          router.refresh();
-        }
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          if (error.response?.status === 401) {
+        }else{
+          if(res.message === 'unauthorized'){
             toast({
               title: "please, sign in to perform this action!",
             });
             return redirect("/login");
           }
           toast({
-            title: error.response?.data.error,
+            title: "Something went wrong!!"
           });
-          return;
         }
-        toast({
-          title: "Something went wrong!!",
-        });
-      }
       // await new Promise(resolve => { setTimeout(()=>{resolve('nigga')}, 1000) })
       // const res = await new Promise(resolve => { setTimeout(()=>{resolve({ success: true })}, 1000) }) as any
     });

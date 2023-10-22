@@ -7,17 +7,16 @@ import { useRouter } from "next/navigation";
 
 
 type HybridButtonProps = ButtonProps & {
-  href: Url
+  href: string
 }  
 
 const HybridButton = ({ href, children, ...props }: HybridButtonProps) => {
+  const router = useRouter()
   if (href == "#") {
     return <Button {...props}>{children}</Button>;
   }
   return (
-    <Link href={href} prefetch={false}>
-      <Button {...props}>{children}</Button>
-    </Link>
+    <Button onClick={() => router.push(href)} {...props}>{children}</Button>
   );
 };
 

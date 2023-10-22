@@ -10,6 +10,7 @@ import {
   insertCartItemSchema,
   insertCartSchema,
 } from "@/lib/db/schema/schema";
+import { ShoeSizeType } from "@/types/db";
 import { eq } from "drizzle-orm";
 
 export const createCart = async (cart: NewCart) => {
@@ -63,6 +64,23 @@ export const updateCartItemQuantity = async (
     await db
       .update(cartItems)
       .set({ quantity })
+      .where(eq(cartItems.id, cartItemId));
+  } catch (err) {
+    const message = (err as Error).message ?? "Error, please try again";
+    console.error(message);
+    throw new Error(message);
+  }
+};
+
+export const updateCartItemSize = async (
+  id: CartItemId,
+  size: ShoeSizeType
+) => {
+  try {
+    const { id: cartItemId } = cartItemIdSchema.parse({ id });
+    await db
+      .update(cartItems)
+      .set({ size })
       .where(eq(cartItems.id, cartItemId));
   } catch (err) {
     const message = (err as Error).message ?? "Error, please try again";

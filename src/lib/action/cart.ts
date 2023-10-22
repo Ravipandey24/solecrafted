@@ -21,10 +21,37 @@ import {
   deleteCartItem,
   updateCartItem,
   updateCartItemQuantity,
+  updateCartItemSize,
 } from "../api/cart/mutations";
 import { isEqual } from "lodash";
 import { revalidatePath } from "next/cache";
+import { getUserAuth } from "../auth/utils";
 
+
+export const addToCartAction = async (productId: ProductId, size: ShoeSizeType) => {
+  try {
+    const { session } = await getUserAuth();
+    if (!session) {
+      return {
+        success: false,
+        message: 'unauthorized'
+      }
+    }
+    const profileId = session?.user.id;
+    const { cart } = await getOrCreateCart(profileId!);
+    await insertOrUpdateCartItem(productId, cart.id, size);
+    
+    revalidatePath('/')
+    return {
+      success: true
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error).message
+    }
+  }
+}
 
 export const getCartItemData = async (profileId: ProfileId) => {
   const { cart } = await getOrCreateCart(profileId);
@@ -79,6 +106,11 @@ export const insertOrUpdateCartItem = async (
 
 export const editCartItemQuantity = async (itemId: CartItemId, quantity: number) => {
   await updateCartItemQuantity(itemId, quantity)
+  revalidatePath('/')
+}
+
+export const editCartItemSize = async (itemId: CartItemId, size: ShoeSizeType) => {
+  await updateCartItemSize(itemId, size)
   revalidatePath('/')
 }
 
