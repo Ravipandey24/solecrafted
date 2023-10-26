@@ -25,25 +25,23 @@ const ShoeSizeTabs: FC<ShoeSizeTabProps> = async ({
     variant.size === selectedSize.size &&
     variant.metric === selectedSize.metric;
   return (
-    <div>
-      <div className="grid gap-1 grid-cols-3">
-        {AllSizeVariants.map((variant) => (
-          <HybridButton
-            key={variant.size}
-            href={
-              !isButtonDisabled(variant)
-                ? `?metric=${variant.metric}&size=${variant.size}`
-                : "#"
-            }
-            className={cn("w-24", isSelectedTab(variant) && selectedTabClass)}
-            variant="outline"
-            aria-label="Toggle"
-            disabled={isButtonDisabled(variant)}
-          >
-            {variant.metric + " " + variant.size}
-          </HybridButton>
-        ))}
-      </div>
+    <div className="grid gap-1 grid-cols-3">
+      {AllSizeVariants.map((variant) => (
+        <HybridButton
+          key={variant.size}
+          href={
+            !isButtonDisabled(variant)
+              ? `?metric=${variant.metric}&size=${variant.size}`
+              : "#"
+          }
+          className={cn("w-24", isSelectedTab(variant) && selectedTabClass)}
+          variant="outline"
+          aria-label="Toggle"
+          disabled={isButtonDisabled(variant)}
+        >
+          {variant.metric + " " + variant.size}
+        </HybridButton>
+      ))}
     </div>
   );
 };

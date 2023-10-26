@@ -4,6 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { categoryTab } from "@/config/site";
 import { getProducts } from "@/lib/api/products/queries";
 
+
 const page = async ({}) => {
   const { products } = await getProducts(8);
   return (

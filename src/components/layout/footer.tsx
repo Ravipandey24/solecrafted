@@ -3,7 +3,7 @@ import { Icons } from "../icons";
 
 const Footer = ({}) => {
   return (
-    <footer className="h-56 w-full border-t bg-background">
+    <footer className="h-48 w-full border-t bg-background">
       <div className="container h-full p-4">
         <div className="flex flex-col h-full justify-end items-center">
           <div className="w-full grid gap-4 grid-cols-4">
