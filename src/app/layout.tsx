@@ -5,7 +5,7 @@ import NextAuthProvider from "@/components/providers/auth-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 
-const inter = Poppins({ subsets: ['latin'], weight: '500'});
+const inter = Poppins({ subsets: ["latin"], weight: "500" });
 
 export const metadata: Metadata = {
   title: "SoleCrafted",
@@ -18,8 +18,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning >
-      <body className={inter.className} >
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+      </head>
+      <body className={inter.className}>
         <NextAuthProvider>
           <ThemeProvider
             attribute="class"
