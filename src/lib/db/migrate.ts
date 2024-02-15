@@ -1,19 +1,17 @@
 import { env } from "@/lib/env.mjs";
-  
-import { drizzle } from "drizzle-orm/planetscale-serverless";
-import { migrate } from "drizzle-orm/planetscale-serverless/migrator";
-import { connect } from "@planetscale/database";
+import { migrate } from "drizzle-orm/postgres-js/migrator";
+import postgres from 'postgres'
+import { drizzle } from 'drizzle-orm/postgres-js'
 
 
 const runMigrate = async () => {
-  if (!env.DATABASE_URL) {
+  if (!env.DATABASE_URI) {
     throw new Error("DATABASE_URL is not defined");
   }
 
   
-const connection = connect({ url: env.DATABASE_URL });
- 
-const db = drizzle(connection);
+  const client = postgres(env.DATABASE_URI as string)
+  const db = drizzle(client);
 
 
   console.log("⏳ Running migrations...");

@@ -73,6 +73,16 @@ const SideCart = async ({}) => {
 
 const CartContent = async ({ profileId }: { profileId: ProfileId }) => {
   const { cartItems, cartItemCount } = await getCartItemData(profileId);
+  if (cartItems.length === 0) {
+    return (
+      <ErrorCard
+        heading="Cart is Empty!"
+        description="add items to the cart."
+        variant="custom"
+        className="h-full items-center"
+      ></ErrorCard>
+    );
+  }
   return (
     <>
       <SheetHeader>

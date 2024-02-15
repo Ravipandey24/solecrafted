@@ -46,7 +46,7 @@ export const getProductCountByCategory = async (
   const [c] = await db
     .select({ count: sql<number>`count(*)` })
     .from(products)
-    .where(eq(products.category, productCategory!));
+    .where(eq(products.category, productCategory?.toUpperCase()!));
   return { productCount: c.count };
 };
 
@@ -57,7 +57,7 @@ export const getProductByCategory = async (category: Product["category"]) => {
   const c = await db
     .select()
     .from(products)
-    .where(eq(products.category, productCategory!));
+    .where(eq(products.category, productCategory?.toUpperCase()!));
   return { products: c };
 };
 

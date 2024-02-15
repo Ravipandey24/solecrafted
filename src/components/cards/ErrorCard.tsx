@@ -8,6 +8,7 @@ import {
 import { Button } from "../ui/button";
 import { Icons } from "../icons";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 type ErrorCardProps = {
   heading: string;
@@ -22,10 +23,11 @@ const ErrorCard: FC<ErrorCardProps> = ({
   href,
   variant,
   children,
+  className
 }) => {
   return (
-    <div className="w-full flex justify-center">
-      <Card className="border-none">
+    <div className={cn("w-full flex justify-center", className)}>
+      <Card className="border-0 shadow-none">
         <CardContent className="space-y-2">
           <CardTitle className="text-2xl text-center">{heading}</CardTitle>
           <CardDescription>{description}</CardDescription>

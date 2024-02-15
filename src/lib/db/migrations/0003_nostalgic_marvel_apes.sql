@@ -1,1 +1,0 @@
-ALTER TABLE `shopping_cart_items` MODIFY COLUMN `size` json DEFAULT ('null');

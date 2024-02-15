@@ -4,8 +4,8 @@ import { env } from "@/lib/env.mjs";
 export default {
   schema: "./src/lib/db/schema",
   out: "./src/lib/db/migrations",
-  driver: "mysql2",
+  driver: "pg",
   dbCredentials: {
-    connectionString: env.DATABASE_URL,
+    connectionString: env.DATABASE_URI,
   }
 } satisfies Config;
